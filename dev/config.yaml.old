@@ -1,0 +1,42 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  labels:
+    istio-injection: enabled
+spec:
+  profile: demo
+  values:
+    global:
+      istioNamespace: istio-system
+  meshConfig:
+    accessLogFile: /dev/stdout
+  components:
+    egressGateways:
+    - name: istio-egressgateway
+      enabled: false
+    ingressGateways:
+      - name: istio-ingressgateway
+        namespace: istio-system
+        enabled: true
+        k8s:
+          service:
+            ports:
+            # Defaults (https://github.com/istio/istio/blob/1.7.0/manifests/charts/gateways/istio-ingress/values.yaml)
+            - port: 15021
+              targetPort: 15021
+              name: status-port
+            - port: 80
+              targetPort: 8080
+              name: http2
+            - port: 443
+              targetPort: 8443
+              name: https
+            - port: 15443
+              targetPort: 15443
+              name: tls
+            # Custom
+            - port: 31400
+              name: book
+            # - port: 5432
+            #   name: http-swagger
