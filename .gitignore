@@ -3,6 +3,9 @@
 *.log
 tmp/
 release*/
-.terraform*/
+.terraform/
 *.tfstate
 *.tfstate.backup
+backend.tf
+provider.tf
+data.tf

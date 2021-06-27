@@ -1,0 +1,3 @@
+region: "us-east-1"
+bucket: "wingerts-tfstate-0039"
+dynamodb_table: "my-lock-table"
